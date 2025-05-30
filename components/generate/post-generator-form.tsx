@@ -49,11 +49,11 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
       
       // Call our new API endpoint to generate the post
       const response = await generatePost(values.prompt, clientProfile);
-
+      
       console.log('response');
       console.log(response);
       
-      if (response.success) {
+      if (response.success && response.data?.imageUrl) {
         // Create a new post object with the generated image
         const newPost: Post = {
           client_id: clientProfile.id || "bafce0db-0835-49ab-ac6b-e7feb37101a0",
