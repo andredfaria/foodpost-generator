@@ -7,6 +7,7 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Loader2Icon, SparklesIcon } from "lucide-react";
 import { ClientProfile, Post, savePost } from "@/lib/supabase";
+import { generatePost } from "@/lib/api";
 import { promptSuggestions } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PostPreview } from "./post-preview";
 
 const formSchema = z.object({
-  prompt: z.string().min(5, "Please enter at least 5 characters"),
+  prompt: z.string().min(5, "Por favor, digite pelo menos 5 caracteres"),
 });
 
 type PostGeneratorFormProps = {
@@ -46,32 +47,37 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
     try {
       setIsGenerating(true);
       
-      // In a real implementation, this would call an AI service to generate an image
-      // For demo purposes, we'll simulate a delay and use a random stock image
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Call our new API endpoint to generate the post
+      const response = await generatePost(values.prompt, clientProfile);
+
+      console.log('response');
+      console.log(response);
       
-      // Create a new post object
-      const newPost: Post = {
-        client_id: clientProfile.id || "bafce0db-0835-49ab-ac6b-e7feb37101a0",
-        prompt: values.prompt,
-        // For demo, we'll use a random food image from Pexels
-        image_url: getRandomFoodImage(),
-        status: "draft",
-      };
-      
-      // Save post to database
-      const savedPost = await savePost(newPost);
-      
-      if (savedPost) {
-        setGeneratedPost(savedPost);
-        toast.success("Post generated successfully");
-        if (onPostGenerated) onPostGenerated(savedPost);
+      if (response.success) {
+        // Create a new post object with the generated image
+        const newPost: Post = {
+          client_id: clientProfile.id || "bafce0db-0835-49ab-ac6b-e7feb37101a0",
+          prompt: values.prompt,
+          image_url: response.data.imageUrl,
+          status: false,
+        };
+        
+        // Save post to database
+        const savedPost = await savePost(newPost);
+        
+        if (savedPost) {
+          setGeneratedPost(savedPost);
+          toast.success("Post gerado com sucesso");
+          if (onPostGenerated) onPostGenerated(savedPost);
+        } else {
+          toast.error("Falha ao salvar post");
+        }
       } else {
-        toast.error("Failed to generate post");
+        toast.error(response.error || "Falha ao gerar post");
       }
     } catch (error) {
       console.error("Error generating post:", error);
-      toast.error("An error occurred while generating your post");
+      toast.error("Ocorreu um erro ao gerar seu post");
     } finally {
       setIsGenerating(false);
     }
@@ -104,16 +110,16 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
                 name="prompt"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Describe your post</FormLabel>
+                    <FormLabel>Descreva seu post</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Describe what you want in your post (e.g., weekend promotion, new menu item, special event)..."
+                        placeholder="Descreva o que você quer no seu post (ex: promoção de fim de semana, novo item no cardápio, evento especial)..."
                         className="min-h-32 resize-none"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Be specific about what you want to promote or announce.
+                      Seja específico sobre o que você quer promover ou anunciar.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -121,7 +127,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
               />
 
               <div className="mt-4">
-                <p className="text-sm text-muted-foreground mb-2">Suggestions:</p>
+                <p className="text-sm text-muted-foreground mb-2">Sugestões:</p>
                 <div className="flex flex-wrap gap-2">
                   {promptSuggestions.slice(0, 5).map((suggestion, index) => (
                     <Button
@@ -129,7 +135,6 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
                       variant="outline"
                       size="sm"
                       type="button"
-                      onClick={() => useSuggestion(suggestion)}
                       className="text-xs"
                     >
                       {suggestion}
@@ -150,14 +155,14 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
             ) : (
               <SparklesIcon className="mr-2 h-4 w-4" />
             )}
-            {isGenerating ? "Generating..." : "Generate Post"}
+            {isGenerating ? "Gerando..." : "Gerar Post"}
           </Button>
         </form>
       </Form>
 
       {generatedPost && (
         <div className="mt-8">
-          <h2 className="text-xl font-bold mb-4">Generated Post</h2>
+          <h2 className="text-xl font-bold mb-4">Post Gerado</h2>
           <PostPreview post={generatedPost} clientProfile={clientProfile} />
         </div>
       )}

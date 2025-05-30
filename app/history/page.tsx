@@ -22,7 +22,7 @@ export default function HistoryPage() {
         }
       } catch (error) {
         console.error("Error loading posts:", error);
-        toast.error("Failed to load post history");
+        toast.error("Falha ao carregar histórico de posts");
       } finally {
         setIsLoading(false);
       }
@@ -35,24 +35,24 @@ export default function HistoryPage() {
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Post History</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Histórico de Posts</h1>
           <p className="text-muted-foreground mt-2">
-            View and manage your generated social media posts.
+            Visualize e gerencie seus posts gerados para redes sociais.
           </p>
         </div>
 
         {isLoading ? (
           <Card>
             <CardContent className="py-10 text-center">
-              <p className="text-muted-foreground">Loading...</p>
+              <p className="text-muted-foreground">Carregando...</p>
             </CardContent>
           </Card>
         ) : posts.length === 0 ? (
           <Card>
             <CardHeader>
-              <CardTitle>No Posts Yet</CardTitle>
+              <CardTitle>Nenhum Post Ainda</CardTitle>
               <CardDescription>
-                You havent generated any posts yet.
+                Você ainda não gerou nenhum post.
               </CardDescription>
             </CardHeader>
           </Card>

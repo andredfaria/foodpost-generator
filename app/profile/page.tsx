@@ -22,7 +22,7 @@ export default function ProfilePage() {
         }
       } catch (error) {
         console.error("Error loading profile:", error);
-        toast.error("Failed to load profile data");
+        toast.error("Falha ao carregar dados do perfil");
       } finally {
         setIsLoading(false);
       }
@@ -35,16 +35,16 @@ export default function ProfilePage() {
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Business Profile</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Perfil do Negócio</h1>
           <p className="text-muted-foreground mt-2">
-            Set up your business profile to create branded social media posts.
+            Configure seu perfil de negócio para criar posts personalizados para redes sociais.
           </p>
         </div>
 
         {isLoading ? (
           <Card>
             <CardContent className="py-10 text-center">
-              <p className="text-muted-foreground">Loading...</p>
+              <p className="text-muted-foreground">Carregando...</p>
             </CardContent>
           </Card>
         ) : (

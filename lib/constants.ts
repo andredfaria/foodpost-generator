@@ -1,27 +1,27 @@
-// Business segment options
+// Opções de segmento de negócio
 export const businessSegments = [
-  { value: 'restaurant', label: 'Restaurant' },
+  { value: 'restaurant', label: 'Restaurante' },
   { value: 'cafe', label: 'Café' },
-  { value: 'bakery', label: 'Bakery' },
-  { value: 'pizzeria', label: 'Pizzeria' },
-  { value: 'hamburger', label: 'Hamburger Joint' },
+  { value: 'bakery', label: 'Padaria' },
+  { value: 'pizzeria', label: 'Pizzaria' },
+  { value: 'hamburger', label: 'Hamburgueria' },
   { value: 'sushi', label: 'Sushi Bar' },
-  { value: 'icecream', label: 'Ice Cream Shop' },
+  { value: 'icecream', label: 'Sorveteria' },
   { value: 'foodtruck', label: 'Food Truck' },
-  { value: 'catering', label: 'Catering Service' },
-  { value: 'other', label: 'Other' },
+  { value: 'catering', label: 'Serviço de Buffet' },
+  { value: 'other', label: 'Outro' },
 ];
 
-// Post prompt suggestions
+// Sugestões de prompts para postagens
 export const promptSuggestions = [
-  'Announce a weekend special promotion',
-  'Showcase our most popular dish',
-  'Highlight a seasonal menu item',
-  'Promote a special event or celebration',
-  'Share a behind-the-scenes look at our kitchen',
-  'Announce extended hours',
-  'Promote a limited-time offer',
-  'Introduce a new menu item',
-  'Share customer testimonials',
-  'Promote a holiday special',
-]; 
+  'Anuncie uma promoção especial para o final de semana',
+  'Mostre nosso prato mais popular',
+  'Destaque um item sazonal do cardápio',
+  'Divulgue um evento ou comemoração especial',
+  'Compartilhe os bastidores da nossa cozinha',
+  'Anuncie horário de funcionamento estendido',
+  'Divulgue uma oferta por tempo limitado',
+  'Apresente um novo item do cardápio',
+  'Compartilhe depoimentos de clientes',
+  'Divulgue uma promoção de feriado',
+];

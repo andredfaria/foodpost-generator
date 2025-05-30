@@ -29,10 +29,10 @@ export function PostPreview({ post, clientProfile, showControls = true }: PostPr
       // In a real app, this would integrate with Instagram API
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      toast.success("Post shared to Instagram!");
+      toast.success("Post compartilhado no Instagram!");
     } catch (error) {
       console.error("Error sharing post:", error);
-      toast.error("Failed to share post");
+      toast.error("Falha ao compartilhar post");
     } finally {
       setIsSharing(false);
     }
@@ -40,20 +40,20 @@ export function PostPreview({ post, clientProfile, showControls = true }: PostPr
   
   const handleDownload = () => {
     // In a real implementation, this would download the image
-    toast.success("Post image downloaded!");
+    toast.success("Imagem do post baixada!");
   };
   
   // Format the date
   const formattedDate = post.created_at 
-    ? format(new Date(post.created_at), "MMMM d, yyyy")
-    : "Today";
+    ? format(new Date(post.created_at), "d 'de' MMMM 'de' yyyy")
+    : "Hoje";
   
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-md">
       <div className="relative aspect-square w-full overflow-hidden">
         <Image
           src={post.image_url}
-          alt="Generated post"
+          alt="Post gerado"
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover"
@@ -110,7 +110,7 @@ export function PostPreview({ post, clientProfile, showControls = true }: PostPr
             onClick={handleDownload}
           >
             <DownloadIcon className="h-4 w-4 mr-2" />
-            Download
+            Baixar
           </Button>
           <Button 
             size="sm" 
@@ -119,11 +119,11 @@ export function PostPreview({ post, clientProfile, showControls = true }: PostPr
             disabled={isSharing}
           >
             {isSharing ? (
-              <>Sharing...</>
+              <>Compartilhando...</>
             ) : (
               <>
                 <InstagramIcon className="h-4 w-4 mr-2" />
-                Share
+                Compartilhar
               </>
             )}
           </Button>

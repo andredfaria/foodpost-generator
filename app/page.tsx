@@ -9,24 +9,24 @@ export default function Home() {
       <section className="py-12 md:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            Create Engaging Social Media Posts for Your
-            <span className="text-primary block mt-2">Food Business</span>
+            Crie Posts Engajantes para Suas
+            <span className="text-primary block mt-2">Redes Sociais</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Generate beautiful, professionally designed posts for your restaurant, 
-            bakery, café or any food business in seconds. Boost your social media 
-            presence and attract more customers.
+            Gere posts lindos e profissionalmente projetados para seu restaurante, 
+            padaria, café ou qualquer negócio de alimentação em segundos. Aumente sua 
+            presença nas redes sociais e atraia mais clientes.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
               <Link href="/generate">
-                Start Creating Posts
+                Começar a Criar Posts
                 <ArrowRightIcon className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <Link href="/profile">
-                Setup Your Profile
+                Configurar Perfil
               </Link>
             </Button>
           </div>
@@ -37,10 +37,10 @@ export default function Home() {
       <section className="py-12 md:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Features Designed for Food Businesses
+            Recursos Desenvolvidos para Negócios de Alimentação
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Everything you need to create mouth-watering social media content
+            Tudo que você precisa para criar conteúdo irresistível para redes sociais
           </p>
         </div>
 
@@ -49,9 +49,9 @@ export default function Home() {
             <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
               <PaletteIcon className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-xl font-semibold">Customized Branding</h3>
+            <h3 className="text-xl font-semibold">Identidade Visual Personalizada</h3>
             <p className="mt-2 text-muted-foreground">
-              Keep your posts on-brand with your logo, colors, and business identity.
+              Mantenha seus posts alinhados com sua logo, cores e identidade do negócio.
             </p>
           </div>
 
@@ -59,9 +59,9 @@ export default function Home() {
             <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
               <ImageIcon className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-xl font-semibold">Beautiful Food-Focused Posts</h3>
+            <h3 className="text-xl font-semibold">Posts Focados em Gastronomia</h3>
             <p className="mt-2 text-muted-foreground">
-              Generate posts that showcase your food in the most appetizing way possible.
+              Gere posts que destacam sua comida da forma mais apetitosa possível.
             </p>
           </div>
 
@@ -69,9 +69,9 @@ export default function Home() {
             <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
               <InstagramIcon className="h-6 w-6 text-primary" />
             </div>
-            <h3 className="text-xl font-semibold">Instagram Integration</h3>
+            <h3 className="text-xl font-semibold">Integração com Instagram</h3>
             <p className="mt-2 text-muted-foreground">
-              Share your posts directly to Instagram with just a click.
+              Compartilhe seus posts diretamente no Instagram com apenas um clique.
             </p>
           </div>
         </div>
@@ -81,10 +81,10 @@ export default function Home() {
       <section className="py-12 md:py-20 bg-muted rounded-lg my-12">
         <div className="mx-auto max-w-4xl text-center px-4">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            How It Works
+            Como Funciona
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Create professional social media content in three simple steps
+            Crie conteúdo profissional para redes sociais em três passos simples
           </p>
         </div>
 
@@ -93,9 +93,9 @@ export default function Home() {
             <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
               1
             </div>
-            <h3 className="text-xl font-semibold">Setup Your Profile</h3>
+            <h3 className="text-xl font-semibold">Configure Seu Perfil</h3>
             <p className="mt-2 text-muted-foreground">
-              Add your business details, logo, and brand colors.
+              Adicione os detalhes do seu negócio, logo e cores da marca.
             </p>
           </div>
 
@@ -103,9 +103,9 @@ export default function Home() {
             <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
               2
             </div>
-            <h3 className="text-xl font-semibold">Describe Your Post</h3>
+            <h3 className="text-xl font-semibold">Descreva Seu Post</h3>
             <p className="mt-2 text-muted-foreground">
-              Tell us what you want to promote or announce.
+              Diga-nos o que você quer promover ou anunciar.
             </p>
           </div>
 
@@ -113,9 +113,9 @@ export default function Home() {
             <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-4 text-primary-foreground font-bold text-xl">
               3
             </div>
-            <h3 className="text-xl font-semibold">Generate & Share</h3>
+            <h3 className="text-xl font-semibold">Gere e Compartilhe</h3>
             <p className="mt-2 text-muted-foreground">
-              Get your beautiful post and share it with your audience.
+              Obtenha seu post lindo e compartilhe com seu público.
             </p>
           </div>
         </div>
@@ -125,15 +125,15 @@ export default function Home() {
       <section className="py-12 md:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Ready to Boost Your Social Media Presence?
+            Pronto para Impulsionar Sua Presença nas Redes Sociais?
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Start creating professional posts that attract more customers to your food business.
+            Comece a criar posts profissionais que atraem mais clientes para seu negócio de alimentação.
           </p>
           <div className="mt-10">
             <Button size="lg" asChild>
               <Link href="/generate">
-                Create Your First Post
+                Criar Seu Primeiro Post
                 <ArrowRightIcon className="ml-2 h-4 w-4" />
               </Link>
             </Button>

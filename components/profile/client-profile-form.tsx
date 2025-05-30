@@ -30,11 +30,11 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 
 const formSchema = z.object({
-  business_name: z.string().min(2, "Business name must be at least 2 characters"),
-  instagram_link: z.string().url("Please enter a valid Instagram URL"),
-  segment: z.string().min(1, "Please select a business segment"),
-  primary_color: z.string().min(1, "Please select a primary color"),
-  secondary_color: z.string().min(1, "Please select a secondary color"),
+  business_name: z.string().min(2, "O nome do negócio deve ter pelo menos 2 caracteres"),
+  instagram_link: z.string().url("Por favor, insira uma URL válida do Instagram"),
+  segment: z.string().min(1, "Por favor, selecione um segmento de negócio"),
+  primary_color: z.string().min(1, "Por favor, selecione uma cor primária"),
+  secondary_color: z.string().min(1, "Por favor, selecione uma cor secundária"),
 });
 
 type ClientProfileFormProps = {
@@ -97,14 +97,14 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
       const savedProfile = await saveClientProfile(profileData);
       
       if (savedProfile) {
-        toast.success("Profile updated successfully");
+        toast.success("Perfil atualizado com sucesso");
         if (onSave) onSave(savedProfile);
       } else {
-        toast.error("Failed to update profile");
+        toast.error("Falha ao atualizar perfil");
       }
     } catch (error) {
       console.error("Error saving profile:", error);
-      toast.error("An error occurred while saving your profile");
+      toast.error("Ocorreu um erro ao salvar seu perfil");
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +118,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
             <div className="space-y-6">
               {/* Logo Upload */}
               <div className="space-y-2">
-                <FormLabel>Business Logo</FormLabel>
+                <FormLabel>Logo do Negócio</FormLabel>
                 <div className="flex flex-col items-center sm:flex-row sm:items-start gap-4">
                   <div 
                     className="w-32 h-32 rounded-md border border-input flex items-center justify-center overflow-hidden bg-muted"
@@ -130,7 +130,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                   >
                     {!logoPreview && (
                       <span className="text-muted-foreground text-sm text-center px-2">
-                        No logo uploaded
+                        Nenhuma logo enviada
                       </span>
                     )}
                   </div>
@@ -143,7 +143,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                       className="max-w-xs"
                     />
                     <FormDescription>
-                      Upload a square logo image for best results.
+                      Envie uma imagem quadrada para melhores resultados.
                     </FormDescription>
                   </div>
                 </div>
@@ -155,9 +155,9 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                 name="business_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Business Name</FormLabel>
+                    <FormLabel>Nome do Negócio</FormLabel>
                     <FormControl>
-                      <Input placeholder="Delicious Bites" {...field} />
+                      <Input placeholder="Deliciosos Sabores" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -170,9 +170,9 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                 name="instagram_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Instagram Link</FormLabel>
+                    <FormLabel>Link do Instagram</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://instagram.com/yourbusiness" {...field} />
+                      <Input placeholder="https://instagram.com/seunegocio" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -185,14 +185,14 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                 name="segment"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Business Segment</FormLabel>
+                    <FormLabel>Segmento do Negócio</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a business segment" />
+                          <SelectValue placeholder="Selecione um segmento de negócio" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -215,7 +215,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                   name="primary_color"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Primary Color</FormLabel>
+                      <FormLabel>Cor Primária</FormLabel>
                       <FormControl>
                         <div className="flex items-center gap-2">
                           <ColorPicker
@@ -230,7 +230,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                         </div>
                       </FormControl>
                       <FormDescription>
-                        Main brand color for headers and accents
+                        Cor principal da marca para cabeçalhos e destaques
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -242,7 +242,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                   name="secondary_color"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Secondary Color</FormLabel>
+                      <FormLabel>Cor Secundária</FormLabel>
                       <FormControl>
                         <div className="flex items-center gap-2">
                           <ColorPicker
@@ -257,7 +257,7 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
                         </div>
                       </FormControl>
                       <FormDescription>
-                        Complementary color for backgrounds and highlights
+                        Cor secundária para elementos complementares
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -269,8 +269,10 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
         </Card>
 
         <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
-          {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
-          Save Profile
+          {isLoading ? (
+            <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+          ) : null}
+          {isLoading ? "Salvando..." : "Salvar Perfil"}
         </Button>
       </form>
     </Form>

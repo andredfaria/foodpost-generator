@@ -42,7 +42,7 @@ export default function GeneratePage() {
         }
       } catch (error) {
         console.error("Error loading profile:", error);
-        toast.error("Failed to load profile data");
+        toast.error("Falha ao carregar dados do perfil");
       } finally {
         setIsLoading(false);
       }
@@ -55,16 +55,16 @@ export default function GeneratePage() {
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Generate Social Media Post</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Gerar Post para Redes Sociais</h1>
           <p className="text-muted-foreground mt-2">
-            Create beautiful, branded posts for your food business.
+            Crie posts lindos e personalizados para seu negócio de alimentação.
           </p>
         </div>
 
         {isLoading ? (
           <Card>
             <CardContent className="py-10 text-center">
-              <p className="text-muted-foreground">Loading...</p>
+              <p className="text-muted-foreground">Carregando...</p>
             </CardContent>
           </Card>
         ) : !profileComplete ? (
@@ -72,19 +72,19 @@ export default function GeneratePage() {
             <CardHeader>
               <CardTitle className="flex items-center text-destructive">
                 <AlertTriangleIcon className="h-5 w-5 mr-2" />
-                Profile Setup Required
+                Configuração do Perfil Necessária
               </CardTitle>
               <CardDescription>
-                Please complete your business profile before generating posts.
+                Por favor, complete seu perfil de negócio antes de gerar posts.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-4">
-                Your business profile is incomplete. We need information about your 
-                business to create branded posts that match your identity.
+                Seu perfil de negócio está incompleto. Precisamos de informações sobre seu 
+                negócio para criar posts personalizados que correspondam à sua identidade.
               </p>
               <Button asChild>
-                <Link href="/profile">Complete Your Profile</Link>
+                <Link href="/profile">Completar Seu Perfil</Link>
               </Button>
             </CardContent>
           </Card>
