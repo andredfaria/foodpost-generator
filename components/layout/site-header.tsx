@@ -40,8 +40,8 @@ export function SiteHeader() {
           : "bg-background"
       )}
     >
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-6">
+      <div className="container mx-auto p-4 flex h-18 items-center justify-between">
+        <div className="flex items-center gap-8">
           <Link
             href="/"
             className="flex items-center space-x-2 font-bold text-xl"
@@ -51,15 +51,15 @@ export function SiteHeader() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6">
+          <nav className="hidden md:flex gap-8">
             {routes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
+                  "text-sm font-medium transition-colors hover:text-primary px-2 py-1 rounded-md",
                   pathname === route.href
-                    ? "text-foreground"
+                    ? "text-foreground bg-muted"
                     : "text-muted-foreground"
                 )}
               >
@@ -69,17 +69,18 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             aria-label="Toggle theme"
+            className="h-10 w-10"
           >
             {theme === "dark" ? (
-              <SunIcon className="h-5 w-5" />
+              <SunIcon className="h-4 w-4" />
             ) : (
-              <MoonIcon className="h-5 w-5" />
+              <MoonIcon className="h-4 w-4" />
             )}
           </Button>
 
@@ -87,14 +88,14 @@ export function SiteHeader() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden h-10 w-10"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <XIcon className="h-5 w-5" />
+              <XIcon className="h-4 w-4" />
             ) : (
-              <MenuIcon className="h-5 w-5" />
+              <MenuIcon className="h-4 w-4" />
             )}
           </Button>
         </div>
@@ -102,17 +103,17 @@ export function SiteHeader() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t">
-          <nav className="container py-4 flex flex-col">
+        <div className="md:hidden border-t bg-background/95 backdrop-blur-sm">
+          <nav className="container mx-auto px-4 py-6 flex flex-col space-y-2">
             {routes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
                 className={cn(
-                  "py-2 text-base font-medium transition-colors hover:text-primary",
+                  "py-3 px-4 text-base font-medium transition-colors hover:text-primary rounded-md",
                   pathname === route.href
-                    ? "text-foreground"
-                    : "text-muted-foreground"
+                    ? "text-foreground bg-muted"
+                    : "text-muted-foreground hover:bg-muted/50"
                 )}
                 onClick={() => setIsMobileMenuOpen(false)}
               >

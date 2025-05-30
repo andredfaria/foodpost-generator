@@ -13,7 +13,6 @@ export default function HistoryPage() {
   useEffect(() => {
     async function loadPosts() {
       try {
-
         const userId = "64dac051-d87f-4d4d-83e1-b5b9b40fa7ef";
         const clientPosts = await getPosts(userId);
         
@@ -31,35 +30,17 @@ export default function HistoryPage() {
     loadPosts();
   }, []);
 
-  return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="max-w-3xl mx-auto space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Histórico de Posts</h1>
-          <p className="text-muted-foreground mt-2">
-            Visualize e gerencie seus posts gerados para redes sociais.
-          </p>
-        </div>
-
-        {isLoading ? (
-          <Card>
-            <CardContent className="py-10 text-center">
-              <p className="text-muted-foreground">Carregando...</p>
-            </CardContent>
-          </Card>
-        ) : posts.length === 0 ? (
-          <Card>
-            <CardHeader>
-              <CardTitle>Nenhum Post Ainda</CardTitle>
-              <CardDescription>
-                Você ainda não gerou nenhum post.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        ) : (
-          <PostHistory posts={posts} />
-        )}
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-10">
+        <Card>
+          <CardContent className="py-10 text-center">
+            <p className="text-muted-foreground">Carregando...</p>
+          </CardContent>
+        </Card>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <PostHistory posts={posts} />;
 }

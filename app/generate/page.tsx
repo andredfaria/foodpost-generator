@@ -20,13 +20,9 @@ export default function GeneratePage() {
         // In a real app, we would get the user ID from authentication
         const userId = "bafce0db-0835-49ab-ac6b-e7feb37101a0";
         const profile = await getClientProfile(userId);
-        console.log('Profile loaded:', profile);
         
         if (profile) {
-          console.log("clientProfile loaded:", clientProfile);
           setClientProfile(profile);
-          console.log("clientProfile loaded:", clientProfile);
-
           
           // Check if profile is complete
           const isComplete = Boolean(

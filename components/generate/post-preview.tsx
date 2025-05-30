@@ -24,7 +24,7 @@ export function PostPreview({ post, clientProfile, showControls = true }: PostPr
       setIsSharing(true);
       
       // Simulate API call to update post status
-      await updatePostStatus(post.id || "", "published");
+      await updatePostStatus(post.id || "", true);
       
       // In a real app, this would integrate with Instagram API
       await new Promise(resolve => setTimeout(resolve, 1500));

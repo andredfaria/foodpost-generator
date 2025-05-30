@@ -41,12 +41,9 @@ export async function getClientProfile(userId: string): Promise<ClientProfile | 
 }
 
 export async function saveClientProfile(profile: ClientProfile): Promise<ClientProfile | null> {
-  try {
-    console.log('Saving client profile:', profile);
-    
+  try {   
     let result;
     if (profile.id) {
-      console.log('Updating client profile:', profile);
       const { id, ...updateData } = profile;
       result = await supabase
         .from('client_profile')

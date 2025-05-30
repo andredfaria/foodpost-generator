@@ -1,15 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { toast } from "sonner";
-import { Loader2Icon, SparklesIcon } from "lucide-react";
-import { ClientProfile, Post, savePost } from "@/lib/supabase";
-import { generatePost } from "@/lib/api";
-import { promptSuggestions } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -20,7 +12,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
+import { promptSuggestions } from "@/lib/constants";
+import { ClientProfile, Post, savePost } from "@/lib/supabase";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2Icon, SparklesIcon } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 import { PostPreview } from "./post-preview";
 
 const formSchema = z.object({
@@ -47,18 +46,25 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
     try {
       setIsGenerating(true);
       
-      // Call our new API endpoint to generate the post
-      const response = await generatePost(values.prompt, clientProfile);
+      // Chamada para a API
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: values.prompt,
+          clientProfile: clientProfile
+        }), 
+      });
+
+      const data = await response.json();
       
-      console.log('response');
-      console.log(response);
-      
-      if (response.success && response.data?.imageUrl) {
-        // Create a new post object with the generated image
+      if (data.success && data.data?.imageUrl) {
         const newPost: Post = {
           client_id: clientProfile.id || "bafce0db-0835-49ab-ac6b-e7feb37101a0",
           prompt: values.prompt,
-          image_url: response.data.imageUrl,
+          image_url: data.data.imageUrl,
           status: false,
         };
         
@@ -73,7 +79,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
           toast.error("Falha ao salvar post");
         }
       } else {
-        toast.error(response.error || "Falha ao gerar post");
+        toast.error(data.error || "Falha ao gerar post");
       }
     } catch (error) {
       console.error("Error generating post:", error);
@@ -95,7 +101,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
     return foodImages[Math.floor(Math.random() * foodImages.length)];
   };
 
-  const useSuggestion = (suggestion: string) => {
+  const applySuggestion = (suggestion: string) => {
     form.setValue("prompt", suggestion);
   };
 
@@ -136,6 +142,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
                       size="sm"
                       type="button"
                       className="text-xs"
+                      onClick={() => applySuggestion(suggestion)}
                     >
                       {suggestion}
                     </Button>
