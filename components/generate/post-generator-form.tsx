@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { PostPreview } from "./post-preview";
+import { useAuth } from "@/lib/providers/auth-provider";
 
 const formSchema = z.object({
   prompt: z.string().min(5, "Por favor, digite pelo menos 5 caracteres"),
@@ -32,6 +33,7 @@ type PostGeneratorFormProps = {
 };
 
 export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGeneratorFormProps) {
+  const { user } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedPost, setGeneratedPost] = useState<Post | null>(null);
 
@@ -43,6 +45,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
     try {
       setIsGenerating(true);
       
@@ -62,7 +65,7 @@ export function PostGeneratorForm({ clientProfile, onPostGenerated }: PostGenera
       
       if (data.success && data.data?.imageUrl) {
         const newPost: Post = {
-          client_id: clientProfile.id || "bafce0db-0835-49ab-ac6b-e7feb37101a0",
+          client_id: clientProfile?.id || "",
           prompt: values.prompt,
           image_url: data.data.imageUrl,
           status: false,

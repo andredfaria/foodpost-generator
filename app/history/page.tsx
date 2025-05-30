@@ -2,19 +2,33 @@
 
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { getPosts, Post } from "@/lib/supabase";
+import { getPosts, Post, getClientProfile } from "@/lib/supabase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PostHistory } from "@/components/history/post-history";
+import { ProtectedRoute } from "@/components/auth/protected-route";
+import { useAuth } from "@/lib/providers/auth-provider";
 
-export default function HistoryPage() {
+function HistoryContent() {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     async function loadPosts() {
+      if (!user) return;
+      
       try {
-        const userId = "64dac051-d87f-4d4d-83e1-b5b9b40fa7ef";
-        const clientPosts = await getPosts(userId);
+        // Primeiro busca o perfil do cliente
+        const clientProfile = await getClientProfile(user.id);
+        
+        if (!clientProfile?.id) {
+          toast.error("Perfil do cliente não encontrado");
+          setIsLoading(false);
+          return;
+        }
+
+        // Depois busca os posts usando o ID do perfil do cliente
+        const clientPosts = await getPosts(clientProfile.id);
         
         if (clientPosts) {
           setPosts(clientPosts);
@@ -28,7 +42,7 @@ export default function HistoryPage() {
     }
     
     loadPosts();
-  }, []);
+  }, [user]);
 
   if (isLoading) {
     return (
@@ -43,4 +57,12 @@ export default function HistoryPage() {
   }
 
   return <PostHistory posts={posts} />;
+}
+
+export default function HistoryPage() {
+  return (
+    <ProtectedRoute>
+      <HistoryContent />
+    </ProtectedRoute>
+  );
 }

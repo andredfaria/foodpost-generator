@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/lib/providers/auth-provider";
 
 const formSchema = z.object({
   business_name: z.string().min(2, "O nome do negócio deve ter pelo menos 2 caracteres"),
@@ -43,6 +44,7 @@ type ClientProfileFormProps = {
 };
 
 export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProps) {
+  const { user } = useAuth();
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>(initialData?.logo_url || "");
   const [isLoading, setIsLoading] = useState(false);
@@ -67,10 +69,15 @@ export function ClientProfileForm({ initialData, onSave }: ClientProfileFormProp
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!user) {
+      toast.error("Usuário não autenticado");
+      return;
+    }
+
     try {
       setIsLoading(true);
       
-      const userId = initialData?.fk_id_user || "bafce0db-0835-49ab-ac6b-e7feb37101a0";
+      const userId = user.id;
       
       // Handle logo upload if there's a new file
       let logoUrl = initialData?.logo_url || "";

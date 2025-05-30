@@ -5,21 +5,29 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { MoonIcon, SunIcon, MenuIcon, XIcon } from "lucide-react";
+import { MoonIcon, SunIcon, MenuIcon, XIcon, LogIn } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useAuth } from "@/lib/providers/auth-provider";
+import { UserMenu } from "./user-menu";
 
 const routes = [
   { href: "/", label: "Home" },
-  { href: "/profile", label: "Profile" },
-  { href: "/generate", label: "Generate Post" },
-  { href: "/history", label: "Post History" },
+  { href: "/profile", label: "Profile", requiresAuth: true },
+  { href: "/generate", label: "Generate Post", requiresAuth: true },
+  { href: "/history", label: "Post History", requiresAuth: true },
 ];
 
 export function SiteHeader() {
   const { setTheme, theme } = useTheme();
+  const { user, loading } = useAuth();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Filter routes based on authentication status
+  const visibleRoutes = routes.filter(route => 
+    !route.requiresAuth || user
+  );
 
   // Handle scroll effect for header
   useEffect(() => {
@@ -52,7 +60,7 @@ export function SiteHeader() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-8">
-            {routes.map((route) => (
+            {visibleRoutes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
@@ -84,6 +92,22 @@ export function SiteHeader() {
             )}
           </Button>
 
+          {/* Authentication Section */}
+          {!loading && (
+            <>
+              {user ? (
+                <UserMenu />
+              ) : (
+                <Link href="/auth/login">
+                  <Button variant="default" size="sm" className="hidden md:flex">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </>
+          )}
+
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
@@ -105,7 +129,7 @@ export function SiteHeader() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t bg-background/95 backdrop-blur-sm">
           <nav className="container mx-auto px-4 py-6 flex flex-col space-y-2">
-            {routes.map((route) => (
+            {visibleRoutes.map((route) => (
               <Link
                 key={route.href}
                 href={route.href}
@@ -120,6 +144,18 @@ export function SiteHeader() {
                 {route.label}
               </Link>
             ))}
+            
+            {/* Mobile Authentication */}
+            {!loading && !user && (
+              <Link
+                href="/auth/login"
+                className="py-3 px-4 text-base font-medium transition-colors hover:text-primary rounded-md text-muted-foreground hover:bg-muted/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <LogIn className="mr-2 h-4 w-4 inline" />
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       )}

@@ -8,18 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PostGeneratorForm } from "@/components/generate/post-generator-form";
 import { AlertTriangleIcon } from "lucide-react";
+import { ProtectedRoute } from "@/components/auth/protected-route";
+import { useAuth } from "@/lib/providers/auth-provider";
 
-export default function GeneratePage() {
+function GenerateContent() {
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [clientProfile, setClientProfile] = useState<ClientProfile | null>(null);
   const [profileComplete, setProfileComplete] = useState(false);
 
   useEffect(() => {
     async function loadProfile() {
+      if (!user) return;
+      
       try {
-        // In a real app, we would get the user ID from authentication
-        const userId = "bafce0db-0835-49ab-ac6b-e7feb37101a0";
-        const profile = await getClientProfile(userId);
+        const profile = await getClientProfile(user.id);
         
         if (profile) {
           setClientProfile(profile);
@@ -45,7 +48,7 @@ export default function GeneratePage() {
     }
     
     loadProfile();
-  }, []);
+  }, [user]);
 
   return (
     <div className="container mx-auto px-4 py-10">
@@ -89,5 +92,13 @@ export default function GeneratePage() {
         ) : null}
       </div>
     </div>
+  );
+}
+
+export default function GeneratePage() {
+  return (
+    <ProtectedRoute>
+      <GenerateContent />
+    </ProtectedRoute>
   );
 }
